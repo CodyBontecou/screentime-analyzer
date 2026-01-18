@@ -2,10 +2,15 @@
 """
 Screen Time API - FastAPI wrapper for Screen Time data extraction.
 
+Supports two modes:
+1. Local mode (macOS): Reads directly from knowledgeC.db
+2. Server mode (Linux/cloud): Receives uploads and stores in local SQLite
+
 Run with: uvicorn screentime_api:app --reload
 """
 
 import os
+import sqlite3
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -23,13 +28,55 @@ import csv
 import io
 import json
 
-from screentime import (
-    DEFAULT_DB_PATH,
-    copy_database_to_temp,
-    get_app_usage,
-    aggregate_by_app,
-    format_duration,
-)
+# Server-side storage path (for uploaded data)
+DATA_DIR = Path(os.environ.get("DATA_DIR", "/data"))
+SERVER_DB_PATH = DATA_DIR / "screentime.db"
+
+# Try to import local macOS functions (may not be available on Linux)
+try:
+    from screentime import (
+        DEFAULT_DB_PATH,
+        copy_database_to_temp,
+        get_app_usage,
+        aggregate_by_app,
+        format_duration,
+    )
+    HAS_LOCAL_DB = True
+except Exception:
+    DEFAULT_DB_PATH = Path.home() / "Library/Application Support/Knowledge/knowledgeC.db"
+    HAS_LOCAL_DB = False
+
+    def format_duration(seconds: float) -> str:
+        """Format duration in human-readable format."""
+        if seconds is None or seconds < 0:
+            return "0s"
+        hours = int(seconds // 3600)
+        minutes = int((seconds % 3600) // 60)
+        secs = int(seconds % 60)
+        parts = []
+        if hours > 0:
+            parts.append(f"{hours}h")
+        if minutes > 0:
+            parts.append(f"{minutes}m")
+        if secs > 0 or not parts:
+            parts.append(f"{secs}s")
+        return " ".join(parts)
+
+    def aggregate_by_app(usage_data: list[dict]) -> list[dict]:
+        """Aggregate usage data by app, summing total duration."""
+        app_totals = {}
+        for entry in usage_data:
+            app = entry["app_name"]
+            if app not in app_totals:
+                app_totals[app] = 0
+            app_totals[app] += entry["duration_seconds"]
+        result = [
+            {"app_name": app, "total_duration_seconds": duration}
+            for app, duration in app_totals.items()
+        ]
+        result.sort(key=lambda x: x["total_duration_seconds"], reverse=True)
+        return result
+
 import shutil
 
 # API Key configuration
@@ -55,6 +102,93 @@ async def verify_api_key(api_key: str = Security(api_key_header)) -> str:
             detail="Invalid API key.",
         )
     return api_key
+
+
+# Server-side database functions
+def init_server_db():
+    """Initialize the server-side SQLite database."""
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    conn = sqlite3.connect(SERVER_DB_PATH)
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS usage (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            app_name TEXT NOT NULL,
+            duration_seconds REAL NOT NULL,
+            start_time TEXT,
+            end_time TEXT,
+            UNIQUE(app_name, start_time, end_time)
+        )
+    """)
+    conn.execute("CREATE INDEX IF NOT EXISTS idx_start_time ON usage(start_time)")
+    conn.commit()
+    conn.close()
+
+
+def get_server_usage(
+    start_date: Optional[datetime] = None,
+    end_date: Optional[datetime] = None
+) -> list[dict]:
+    """Get usage data from server-side database."""
+    if not SERVER_DB_PATH.exists():
+        return []
+
+    conn = sqlite3.connect(SERVER_DB_PATH)
+    conn.row_factory = sqlite3.Row
+
+    query = "SELECT app_name, duration_seconds, start_time, end_time FROM usage WHERE 1=1"
+    params = []
+
+    if start_date:
+        query += " AND start_time >= ?"
+        params.append(start_date.isoformat())
+
+    if end_date:
+        query += " AND end_time <= ?"
+        params.append(end_date.isoformat())
+
+    query += " ORDER BY start_time DESC"
+
+    try:
+        cursor = conn.execute(query, params)
+        results = []
+        for row in cursor:
+            results.append({
+                "app_name": row["app_name"],
+                "duration_seconds": row["duration_seconds"],
+                "start_time": datetime.fromisoformat(row["start_time"]) if row["start_time"] else None,
+                "end_time": datetime.fromisoformat(row["end_time"]) if row["end_time"] else None,
+            })
+        return results
+    finally:
+        conn.close()
+
+
+def insert_usage_records(records: list[dict]) -> int:
+    """Insert usage records into server database. Returns count of new records."""
+    init_server_db()
+    conn = sqlite3.connect(SERVER_DB_PATH)
+
+    inserted = 0
+    for record in records:
+        try:
+            conn.execute(
+                """INSERT OR IGNORE INTO usage (app_name, duration_seconds, start_time, end_time)
+                   VALUES (?, ?, ?, ?)""",
+                (
+                    record["app_name"],
+                    record["duration_seconds"],
+                    record["start_time"],
+                    record["end_time"],
+                )
+            )
+            if conn.total_changes > inserted:
+                inserted = conn.total_changes
+        except sqlite3.IntegrityError:
+            pass  # Duplicate record, skip
+
+    conn.commit()
+    conn.close()
+    return inserted
 
 
 app = FastAPI(
@@ -121,54 +255,120 @@ class HealthResponse(BaseModel):
     status: str
     database_exists: bool
     database_path: str
+    server_db_exists: bool = False
+    server_db_path: str = ""
+    record_count: int = 0
+
+
+class UploadRecord(BaseModel):
+    app_name: str
+    duration_seconds: float
+    start_time: Optional[str] = None
+    end_time: Optional[str] = None
+
+
+class UploadRequest(BaseModel):
+    records: list[UploadRecord]
+
+
+class UploadResponse(BaseModel):
+    status: str
+    records_received: int
+    records_inserted: int
 
 
 def get_usage_data(start_date: Optional[date], end_date: Optional[date]) -> list[dict]:
-    """Fetch usage data with proper error handling."""
-    if not DEFAULT_DB_PATH.exists():
-        raise HTTPException(
-            status_code=503,
-            detail={
-                "error": "Database not found",
-                "path": str(DEFAULT_DB_PATH),
-                "hint": "Screen Time may not be enabled, or Full Disk Access may be required.",
-            }
-        )
+    """Fetch usage data with proper error handling.
 
-    temp_db = None
-    try:
-        temp_db = copy_database_to_temp(DEFAULT_DB_PATH)
+    Tries local macOS database first, falls back to server-side storage.
+    """
+    start_dt = datetime.combine(start_date, datetime.min.time()) if start_date else None
+    end_dt = datetime.combine(end_date, datetime.max.time()) if end_date else None
 
-        start_dt = datetime.combine(start_date, datetime.min.time()) if start_date else None
-        end_dt = datetime.combine(end_date, datetime.max.time()) if end_date else None
+    # Try local macOS database first (if available and on macOS)
+    if HAS_LOCAL_DB and DEFAULT_DB_PATH.exists():
+        temp_db = None
+        try:
+            temp_db = copy_database_to_temp(DEFAULT_DB_PATH)
+            return get_app_usage(temp_db, start_dt, end_dt)
+        except PermissionError:
+            raise HTTPException(
+                status_code=403,
+                detail={
+                    "error": "Permission denied",
+                    "hint": "Grant Full Disk Access to the process running this API.",
+                }
+            )
+        except Exception as e:
+            # Fall through to try server database
+            pass
+        finally:
+            if temp_db and temp_db.exists():
+                shutil.rmtree(temp_db.parent, ignore_errors=True)
 
-        return get_app_usage(temp_db, start_dt, end_dt)
+    # Fallback to server-side database (for cloud deployment)
+    if SERVER_DB_PATH.exists():
+        return get_server_usage(start_dt, end_dt)
 
-    except PermissionError:
-        raise HTTPException(
-            status_code=403,
-            detail={
-                "error": "Permission denied",
-                "hint": "Grant Full Disk Access to the process running this API.",
-            }
-        )
-    except Exception as e:
-        raise HTTPException(
-            status_code=500,
-            detail={"error": str(e)}
-        )
-    finally:
-        if temp_db and temp_db.exists():
-            shutil.rmtree(temp_db.parent, ignore_errors=True)
+    raise HTTPException(
+        status_code=503,
+        detail={
+            "error": "No data available",
+            "hint": "Either run on macOS with Screen Time enabled, or upload data using POST /upload",
+        }
+    )
 
 
 @app.get("/health", response_model=HealthResponse, tags=["System"])
 def health_check():
     """Check API health and database availability."""
+    record_count = 0
+    if SERVER_DB_PATH.exists():
+        try:
+            conn = sqlite3.connect(SERVER_DB_PATH)
+            cursor = conn.execute("SELECT COUNT(*) FROM usage")
+            record_count = cursor.fetchone()[0]
+            conn.close()
+        except Exception:
+            pass
+
     return HealthResponse(
         status="ok",
         database_exists=DEFAULT_DB_PATH.exists(),
         database_path=str(DEFAULT_DB_PATH),
+        server_db_exists=SERVER_DB_PATH.exists(),
+        server_db_path=str(SERVER_DB_PATH),
+        record_count=record_count,
+    )
+
+
+@app.post("/upload", response_model=UploadResponse, tags=["Upload"])
+def upload_usage_data(
+    request: UploadRequest,
+    _: str = Depends(verify_api_key),
+):
+    """
+    Upload Screen Time usage records to the server.
+
+    Use this endpoint to sync data from your Mac to the cloud server.
+    Duplicate records (same app, start_time, end_time) are automatically skipped.
+    """
+    records = [
+        {
+            "app_name": r.app_name,
+            "duration_seconds": r.duration_seconds,
+            "start_time": r.start_time,
+            "end_time": r.end_time,
+        }
+        for r in request.records
+    ]
+
+    inserted = insert_usage_records(records)
+
+    return UploadResponse(
+        status="ok",
+        records_received=len(records),
+        records_inserted=inserted,
     )
 
 
