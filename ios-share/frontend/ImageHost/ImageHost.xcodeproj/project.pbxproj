@@ -1,0 +1,603 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		/* Main App Files */
+		A1000001001 /* ImageHostApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000001000 /* ImageHostApp.swift */; };
+		A1000002001 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000002000 /* ContentView.swift */; };
+		A1000003001 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000003000 /* SettingsView.swift */; };
+		A1000004001 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000004000 /* HistoryView.swift */; };
+		A1000005001 /* UploadDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000005000 /* UploadDetailView.swift */; };
+
+		/* Shared Files for Main App */
+		A1000010001 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000010000 /* Config.swift */; };
+		A1000011001 /* UploadRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000011000 /* UploadRecord.swift */; };
+		A1000012001 /* ImageHostError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000012000 /* ImageHostError.swift */; };
+		A1000013001 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000013000 /* KeychainService.swift */; };
+		A1000014001 /* HistoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000014000 /* HistoryService.swift */; };
+		A1000015001 /* ImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000015000 /* ImageProcessor.swift */; };
+		A1000016001 /* UploadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000016000 /* UploadService.swift */; };
+
+		/* Share Extension Files */
+		A1000020001 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000020000 /* ShareViewController.swift */; };
+		A1000021001 /* ShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000021000 /* ShareView.swift */; };
+
+		/* Shared Files for Share Extension */
+		A1000030001 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000010000 /* Config.swift */; };
+		A1000031001 /* UploadRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000011000 /* UploadRecord.swift */; };
+		A1000032001 /* ImageHostError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000012000 /* ImageHostError.swift */; };
+		A1000033001 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000013000 /* KeychainService.swift */; };
+		A1000034001 /* HistoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000014000 /* HistoryService.swift */; };
+		A1000035001 /* ImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000015000 /* ImageProcessor.swift */; };
+		A1000036001 /* UploadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000016000 /* UploadService.swift */; };
+
+		/* Extension Embed */
+		A1000040001 /* ShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A1000040000 /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A1000050000 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A1000000000 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A1000060000;
+			remoteInfo = ShareExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A1000070000 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				A1000040001 /* ShareExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		/* Main App Files */
+		A1000001000 /* ImageHostApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageHostApp.swift; sourceTree = "<group>"; };
+		A1000002000 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A1000003000 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		A1000004000 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		A1000005000 /* UploadDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadDetailView.swift; sourceTree = "<group>"; };
+		A1000006000 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A1000007000 /* ImageHost.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ImageHost.entitlements; sourceTree = "<group>"; };
+
+		/* Shared Files */
+		A1000010000 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		A1000011000 /* UploadRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadRecord.swift; sourceTree = "<group>"; };
+		A1000012000 /* ImageHostError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageHostError.swift; sourceTree = "<group>"; };
+		A1000013000 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		A1000014000 /* HistoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryService.swift; sourceTree = "<group>"; };
+		A1000015000 /* ImageProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessor.swift; sourceTree = "<group>"; };
+		A1000016000 /* UploadService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadService.swift; sourceTree = "<group>"; };
+
+		/* Share Extension Files */
+		A1000020000 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		A1000021000 /* ShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareView.swift; sourceTree = "<group>"; };
+		A1000022000 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A1000023000 /* ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareExtension.entitlements; sourceTree = "<group>"; };
+
+		/* Products */
+		A1000080000 /* ImageHost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageHost.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1000040000 /* ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A1000090000 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A1000091000 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A10000A0000 = {
+			isa = PBXGroup;
+			children = (
+				A10000B0000 /* ImageHost */,
+				A10000C0000 /* ShareExtension */,
+				A10000D0000 /* Shared */,
+				A10000E0000 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A10000B0000 /* ImageHost */ = {
+			isa = PBXGroup;
+			children = (
+				A1000001000 /* ImageHostApp.swift */,
+				A1000002000 /* ContentView.swift */,
+				A10000B1000 /* Views */,
+				A1000006000 /* Info.plist */,
+				A1000007000 /* ImageHost.entitlements */,
+			);
+			path = ImageHost;
+			sourceTree = "<group>";
+		};
+		A10000B1000 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A1000003000 /* SettingsView.swift */,
+				A1000004000 /* HistoryView.swift */,
+				A1000005000 /* UploadDetailView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A10000C0000 /* ShareExtension */ = {
+			isa = PBXGroup;
+			children = (
+				A1000020000 /* ShareViewController.swift */,
+				A1000021000 /* ShareView.swift */,
+				A1000022000 /* Info.plist */,
+				A1000023000 /* ShareExtension.entitlements */,
+			);
+			path = ShareExtension;
+			sourceTree = "<group>";
+		};
+		A10000D0000 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				A1000010000 /* Config.swift */,
+				A10000D1000 /* Models */,
+				A10000D2000 /* Services */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		A10000D1000 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A1000011000 /* UploadRecord.swift */,
+				A1000012000 /* ImageHostError.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		A10000D2000 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				A1000013000 /* KeychainService.swift */,
+				A1000014000 /* HistoryService.swift */,
+				A1000015000 /* ImageProcessor.swift */,
+				A1000016000 /* UploadService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		A10000E0000 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A1000080000 /* ImageHost.app */,
+				A1000040000 /* ShareExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A10000F0000 /* ImageHost */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A1000100000 /* Build configuration list for PBXNativeTarget "ImageHost" */;
+			buildPhases = (
+				A1000110000 /* Sources */,
+				A1000090000 /* Frameworks */,
+				A1000120000 /* Resources */,
+				A1000070000 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A1000130000 /* PBXTargetDependency */,
+			);
+			name = ImageHost;
+			productName = ImageHost;
+			productReference = A1000080000 /* ImageHost.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A1000060000 /* ShareExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A1000140000 /* Build configuration list for PBXNativeTarget "ShareExtension" */;
+			buildPhases = (
+				A1000150000 /* Sources */,
+				A1000091000 /* Frameworks */,
+				A1000160000 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ShareExtension;
+			productName = ShareExtension;
+			productReference = A1000040000 /* ShareExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A1000000000 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					A10000F0000 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+					A1000060000 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = A1000170000 /* Build configuration list for PBXProject "ImageHost" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A10000A0000;
+			productRefGroup = A10000E0000 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A10000F0000 /* ImageHost */,
+				A1000060000 /* ShareExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A1000120000 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A1000160000 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A1000110000 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1000001001 /* ImageHostApp.swift in Sources */,
+				A1000002001 /* ContentView.swift in Sources */,
+				A1000003001 /* SettingsView.swift in Sources */,
+				A1000004001 /* HistoryView.swift in Sources */,
+				A1000005001 /* UploadDetailView.swift in Sources */,
+				A1000010001 /* Config.swift in Sources */,
+				A1000011001 /* UploadRecord.swift in Sources */,
+				A1000012001 /* ImageHostError.swift in Sources */,
+				A1000013001 /* KeychainService.swift in Sources */,
+				A1000014001 /* HistoryService.swift in Sources */,
+				A1000015001 /* ImageProcessor.swift in Sources */,
+				A1000016001 /* UploadService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A1000150000 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1000020001 /* ShareViewController.swift in Sources */,
+				A1000021001 /* ShareView.swift in Sources */,
+				A1000030001 /* Config.swift in Sources */,
+				A1000031001 /* UploadRecord.swift in Sources */,
+				A1000032001 /* ImageHostError.swift in Sources */,
+				A1000033001 /* KeychainService.swift in Sources */,
+				A1000034001 /* HistoryService.swift in Sources */,
+				A1000035001 /* ImageProcessor.swift in Sources */,
+				A1000036001 /* UploadService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A1000130000 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A1000060000 /* ShareExtension */;
+			targetProxy = A1000050000 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		A1000180000 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A1000190000 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A10001A0000 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_ENTITLEMENTS = ImageHost/ImageHost.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ImageHost/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.imagehost.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A10001B0000 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_ENTITLEMENTS = ImageHost/ImageHost.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ImageHost/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.imagehost.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		A10001C0000 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ShareExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ImageHost;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.imagehost.app.ShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A10001D0000 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ShareExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ImageHost;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.imagehost.app.ShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A1000170000 /* Build configuration list for PBXProject "ImageHost" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1000180000 /* Debug */,
+				A1000190000 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A1000100000 /* Build configuration list for PBXNativeTarget "ImageHost" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A10001A0000 /* Debug */,
+				A10001B0000 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A1000140000 /* Build configuration list for PBXNativeTarget "ShareExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A10001C0000 /* Debug */,
+				A10001D0000 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A1000000000 /* Project object */;
+}
